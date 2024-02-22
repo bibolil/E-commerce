@@ -27,8 +27,8 @@ public class User {
     private String password;
     private String addressLine;
     private String mobileNum;
-
-
+private String test; 
+    
     public User() {
     }
 
@@ -41,6 +41,7 @@ public class User {
         this.password = password;
         this.addressLine = addressLine;
         this.mobileNum = mobileNum;
+
     }
 
     public User(String name,LocalDate dob, String email, String username, String password, String addressLine, String mobileNum) {
