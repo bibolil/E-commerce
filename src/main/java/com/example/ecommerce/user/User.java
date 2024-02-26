@@ -5,9 +5,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Collection;
 import java.util.List;
 @Data
@@ -25,6 +22,9 @@ public class User implements UserDetails {
     private Integer id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
+    private String username;
+    @Column(unique = true)
     private String email;
     private String password;
 
@@ -44,7 +44,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
