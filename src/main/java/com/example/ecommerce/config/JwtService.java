@@ -16,6 +16,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+    //to add to env file
     private static final String SECRET_KEY="777628645c444d4144455a5f2a78392758303558307b2158704f496f37";
     public String extractUsername(String jwt) {
         return extractClaim(jwt,Claims::getSubject);
