@@ -39,17 +39,13 @@ public class UserService {
 
     }
 
-//    public User updateUserById(Long userId, User updatedUser) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
-//
-//        // Update user fields
-//        user.setName(updatedUser.getName());
-//        user.setDob(updatedUser.getDob());
-//        user.setEmail(updatedUser.getEmail());
-//        user.setAddressLine(updatedUser.getAddressLine());
-//        user.setMobileNum(updatedUser.getMobileNum());
-//
-//        return userRepository.save(user);
-//    }
+    public User updateUserById(Long userId, User updatedUser) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        // Update user fields
+        user.setFirstname(updatedUser.getFirstname());
+        user.setLastname(updatedUser.getLastname());
+        return userRepository.save(user);
+    }
 }

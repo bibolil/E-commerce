@@ -30,7 +30,7 @@ public class AuthenticationService
             return AuthenticationResponse.builder().status(HttpStatus.CONFLICT).message("Email is being in use !").token("").build();
         }
         var user= User.builder().firstname(request.getFirstname()).lastname(request.getLastname()).username(request.getUsername()).email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
+                .password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).build();
         repository.save(user);
         var jwtToken=jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).status(HttpStatus.OK).message("Registered Successfully !").build();
