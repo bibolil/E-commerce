@@ -45,14 +45,6 @@ public class AuthenticationService
         );
         var user= userRepository.findUserByUsername(request.getUsername()).orElseThrow();
         var jwtToken=jwtService.generateToken(user);
-        var token = Token.builder()
-                .user(user)
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-        tokenRepository.save(token);
         revokeAllUserTokens(user);
         saveUserToken(user,jwtToken);
         return AuthenticationResponse.builder().token(jwtToken).status(HttpStatus.OK).message("Success !").build();
