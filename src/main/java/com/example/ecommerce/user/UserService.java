@@ -44,12 +44,8 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 
         // Update user fields
-        user.setName(updatedUser.getName());
-        user.setDob(updatedUser.getDob());
-        user.setEmail(updatedUser.getEmail());
-        user.setAddressLine(updatedUser.getAddressLine());
-        user.setMobileNum(updatedUser.getMobileNum());
-
+        user.setFirstname(updatedUser.getFirstname());
+        user.setLastname(updatedUser.getLastname());
         return userRepository.save(user);
     }
 }
