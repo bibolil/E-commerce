@@ -10,32 +10,30 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public List<User> getUsers()
-    {
+
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     public void addNewUser(User user) {
-        Optional<User> userByEmail=userRepository.findUserByEmail(user.getEmail());
-        if (userByEmail.isPresent())
-        {
+        Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
+        if (userByEmail.isPresent()) {
             throw new IllegalStateException("Email being used");
         }
         userRepository.save(user);
     }
 
     public void deleteUser(long id) {
-       if(userRepository.existsById(id))
-       {
-           userRepository.deleteById(id);
-       }
-       else {
-           throw new IllegalStateException("User id "+id+" does not exists");
-       }
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new IllegalStateException("User id " + id + " does not exists");
+        }
 
     }
 

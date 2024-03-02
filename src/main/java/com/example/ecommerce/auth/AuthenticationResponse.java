@@ -1,4 +1,5 @@
 package com.example.ecommerce.auth;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private String message;
     private HttpStatus status;
 

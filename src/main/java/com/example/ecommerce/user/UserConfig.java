@@ -23,7 +23,7 @@ public class UserConfig {
                     .password("admin")
                     .role(ADMIN)
                     .build();
-            System.out.println("Admin token: " + service.register(admin).getToken());
+            System.out.println("Admin token: " + service.register(admin).getAccessToken());
             var user = RegisterRequest.builder()
                     .firstname("Bilel")
                     .lastname("Taboubi")
@@ -32,7 +32,8 @@ public class UserConfig {
                     .password("bilel")
                     .role(USER)
                     .build();
-            System.out.println("User token: " + service.register(user).getToken());
+            System.out.println("User token: " + service.register(user).getAccessToken());
         };
-}}
+    }
+}
 
