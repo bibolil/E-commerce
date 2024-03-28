@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -18,6 +19,11 @@ public class ItemService {
     public List<Item> getItems()
     {
         return itemRepository.findAll();
+    }
+
+    public Optional<Item> getItem(long id)
+    {
+        return  itemRepository.findById(id);
     }
 
     public void addNewItem(Item item)
@@ -42,8 +48,8 @@ public class ItemService {
                 .orElseThrow(()->new EntityNotFoundException("Item not found with code: "+code));
         item.setPrice(updatedItem.getPrice());
         item.setDescription(updatedItem.getDescription());
-        item.setPicture(updatedItem.getPicture());
-        item.setInStock(item.getInStock());
+        item.setImage(updatedItem.getImage());
+        item.setInventoryStatus(item.getInventoryStatus());
     }
 
 

@@ -3,6 +3,7 @@ package com.example.ecommerce.user;
 import com.example.ecommerce.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role=Role.USER;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;

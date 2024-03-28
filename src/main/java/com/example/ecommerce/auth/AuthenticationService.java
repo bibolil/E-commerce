@@ -4,6 +4,7 @@ import com.example.ecommerce.config.JwtService;
 import com.example.ecommerce.token.Token;
 import com.example.ecommerce.token.TokenRepository;
 import com.example.ecommerce.token.TokenType;
+import com.example.ecommerce.user.Role;
 import com.example.ecommerce.user.User;
 import com.example.ecommerce.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +41,7 @@ public class AuthenticationService {
             return AuthenticationResponse.builder().status(HttpStatus.CONFLICT).message("Email is being in use !").accessToken("").build();
         }
         var user = User.builder().firstname(request.getFirstname()).lastname(request.getLastname()).username(request.getUsername()).email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).build();
+                .password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
