@@ -3,78 +3,55 @@ package com.example.ecommerce.item;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 
+@Getter
 @Entity
 @Table
 public class Item {
     @Id
     private long code;
-
+    @Setter
+    private String name;
+    @Setter
     private String description;
+    @Setter
     private Double price;
-    private String picture;
-    private Integer InStock;
-
-    public Item() {
+    @Setter
+    private String image;
+    @Setter
+    private Integer inventoryStatus;
+    @Setter
+    private long quantity;
+    @Setter
+    private int rating;
+   public Item() {
     }
 
-    public Item(long code, String description, Double price, String picture, Integer inStock) {
+    public Item(long code, String name, String description, Double price, String image, Integer inventoryStatus, long quantity, int rating) {
         this.code = code;
+        this.name = name;
         this.description = description;
         this.price = price;
-        this.picture = picture;
-        InStock = inStock;
-    }
-
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public Integer getInStock() {
-        return InStock;
-    }
-
-    public void setInStock(Integer inStock) {
-        InStock = inStock;
+        this.image = image;
+        this.inventoryStatus = inventoryStatus;
+        this.quantity = quantity;
+        this.rating = rating;
     }
 
     @Override
     public String toString() {
         return "Item{" +
                 "code=" + code +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", picture='" + picture + '\'' +
-                ", InStock=" + InStock +
+                ", image='" + image + '\'' +
+                ", inventoryStatus=" + inventoryStatus +
+                ", quantity=" + quantity +
+                ", rating=" + rating +
                 '}';
     }
 }

@@ -1,25 +1,39 @@
 package com.example.ecommerce.user;
 
+import com.example.ecommerce.auth.AuthenticationService;
+import com.example.ecommerce.auth.RegisterRequest;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDate;
-import java.util.List;
+import static com.example.ecommerce.user.Role.ADMIN;
+import static com.example.ecommerce.user.Role.USER;
 
 @Configuration
 public class UserConfig {
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository repository)
-    {
-        return args->{
-            User bilel= new User("Bilel Taboubi",LocalDate.of(2000, 12,18),"bt@gmail.com","bileltb20","123465789","Bardo","+216123456");
-            User iheb=new User("Iheb Etteyeb",LocalDate.of(2000, 12,18),"it@gmail.com","iheb20","123465789","Bardo","+216123456");
-            User salma= new User("Salma Nebli",LocalDate.of(2000, 12,18),"sn@gmail.com","salma20","123465789","Bardo","+216123456");
-            User aziz= new User("Aziz kurlex",LocalDate.of(2000, 12,18),"ak@gmail.com","aziz20","123465789","Bardo","+216123456");
-            repository.saveAll(List.of(bilel,iheb,salma,aziz));
+    CommandLineRunner commandLineRunner(AuthenticationService service) {
+
+        return args -> {
+            var admin = RegisterRequest.builder()
+                    .firstname("Admin")
+                    .lastname("Admin")
+                    .email("admin@mail.com")
+                    .username("admin")
+                    .password("admin")
+                    .role(ADMIN)
+                    .build();
+            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+            var user = RegisterRequest.builder()
+                    .firstname("Bilel")
+                    .lastname("Taboubi")
+                    .email("bilel@mail.com")
+                    .username("bilel")
+                    .password("bilel")
+                    .role(USER)
+                    .build();
+            System.out.println("User token: " + service.register(user).getAccessToken());
         };
-
     }
-
 }
+
