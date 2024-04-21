@@ -3,7 +3,6 @@ package com.example.ecommerce.cart;
 import com.example.ecommerce.item.Item;
 import com.example.ecommerce.user.User;
 import com.example.ecommerce.user.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -34,7 +34,7 @@ public class CartController {
 
     @PostMapping("addItem/{userId}")
     public ResponseEntity<String> addItemToCart(@PathVariable Long userId, @RequestBody Item item) {
-        System.out.println("this is from getting cart by user ");
+        System.out.println("this is from adding cart by user ");
         try {
             cartService.addItemToCart(userId, item);
             return ResponseEntity.ok("Item added to cart successfully.");
