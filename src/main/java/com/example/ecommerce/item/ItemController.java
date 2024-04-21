@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173",allowCredentials = "true")
 @RequestMapping(path = "item")
-@PreAuthorize("hasAnyRole('ADMIN','USER')")
+//@PreAuthorize("hasAnyRole('ADMIN','USER')")
 public class ItemController {
     private final ItemService itemService;
 
@@ -18,12 +19,14 @@ public class ItemController {
         this.itemService=itemService;
     }
 
-    @PreAuthorize("hasAnyAuthority('admin:read','user:read')")
+   // @PreAuthorize("hasAnyAuthority('admin:read','user:read')")
     @GetMapping(path="getItems")
-    public List<Item> getItems() {return this.itemService.getItems();}
+    public List<Item> getItems() {
+        System.out.println("this is from getting items ");
+        return this.itemService.getItems();}
 
     @GetMapping(path="getItem/{itemCode}")
-    public Optional<Item> getItem(@PathVariable("itemCode") long code)
+    public Optional<Item> getItem(@PathVariable("itemCode") String code)
     {
         return this.itemService.getItem(code);
     }

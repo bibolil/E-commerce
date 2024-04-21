@@ -1,43 +1,56 @@
 package com.example.ecommerce.item;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.ecommerce.cart.Cart;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
+@Setter
 @Entity
 @Table
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
 public class Item {
     @Id
-    private long code;
+    private String code;
     @Setter
     private String name;
     @Setter
     private String description;
     @Setter
-    private Double price;
-    @Setter
     private String image;
     @Setter
-    private Integer inventoryStatus;
+    private Double price;
+    @Setter
+    private String category;
     @Setter
     private long quantity;
     @Setter
+    private String inventoryStatus;
+    @Setter
     private int rating;
+
+    @ManyToOne
+    private Cart cart;
+
+
+
+
    public Item() {
     }
 
-    public Item(long code, String name, String description, Double price, String image, Integer inventoryStatus, long quantity, int rating) {
+    public Item(String code, String name, String description, String image, Double price, String category,long quantity,String inventoryStatus,  int rating) {
         this.code = code;
         this.name = name;
         this.description = description;
-        this.price = price;
         this.image = image;
-        this.inventoryStatus = inventoryStatus;
+        this.price = price;
+        this.category = category;
         this.quantity = quantity;
+        this.inventoryStatus = inventoryStatus;
         this.rating = rating;
     }
 
