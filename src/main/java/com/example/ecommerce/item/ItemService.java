@@ -21,14 +21,14 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> getItem(long id)
+    public Optional<Item> getItem(String id)
     {
-        return  itemRepository.findById(id);
+        return  itemRepository.findByCode(id);
     }
 
     public void addNewItem(Item item)
     {
-        if(itemRepository.existsById(item.getCode()))
+        if(itemRepository.existsById(Long.valueOf(item.getCode())))
         {
            throw new IllegalStateException("item code already in use");
         }

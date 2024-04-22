@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 
@@ -63,7 +64,7 @@ public class AuthenticationService {
 
 
     private void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(Math.toIntExact(user.getId()));
         if (!validUserTokens.isEmpty()) {
             validUserTokens.forEach(
                     t -> {
@@ -87,28 +88,55 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String username;
+    public AuthenticationResponse refreshToken(String refreshToken){
+        // Check if refresh token is present
+        if (refreshToken == null) {
+            // Handle case where refresh token is missing
+            // For example, return a ResponseEntity with an error response
+            return AuthenticationResponse.builder()
+                            .message("Refresh token not provided")
+                            .status(HttpStatus.BAD_REQUEST)
+                            .build();
+        }
 
-        if(authHeader==null || !authHeader.startsWith("Bearer "))
-        {
-            return;
+
+        // Extract username from refresh token
+        String username = jwtService.extractUsername(refreshToken);
+        if (username == null) {
+            // Handle case where username cannot be extracted from refresh token
+            // For example, return a ResponseEntity with an error response
+            return AuthenticationResponse.builder()
+                            .message("Invalid refresh token")
+                            .status(HttpStatus.BAD_REQUEST)
+                            .build();
         }
-        refreshToken=authHeader.substring(7);
-        username=jwtService.extractUsername(refreshToken);
-        if(username!=null)
-        {
-            var user = this.userRepository.findUserByUsername(username).orElseThrow();
-            if(jwtService.isTokenValid(refreshToken,user))
-            {
-                var accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                saveUserToken(user,accessToken);
-                var authResponse= AuthenticationResponse.builder().accessToken(accessToken).message("refresh token").status(HttpStatus.OK).refreshToken(refreshToken).build();
-                new ObjectMapper().writeValue(response.getOutputStream(),authResponse);
-            }
+
+       // Retrieve user from repository
+        User user = userRepository.findUserByUsername(username).orElse(null);
+        if (user == null) {
+            // Handle case where user cannot be found
+            // For example, return a ResponseEntity with an error response
+            return AuthenticationResponse.builder()
+                            .message("User not found")
+                            .status(HttpStatus.NOT_FOUND)
+                            .build();
         }
+
+        // Generate new access token
+        String newAccessToken = jwtService.generateToken(user);
+
+        // Revoke all user tokens and save new access token
+        revokeAllUserTokens(user);
+        saveUserToken(user, newAccessToken);
+
+        // Build and return the authentication response object including refresh token
+        AuthenticationResponse response = AuthenticationResponse.builder()
+                .accessToken(newAccessToken)
+                .message("Refresh token successful")
+                .status(HttpStatus.OK)
+                .refreshToken(refreshToken)
+                .build();
+
+        return response;
     }
 }
