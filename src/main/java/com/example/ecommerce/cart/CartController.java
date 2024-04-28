@@ -47,12 +47,13 @@ public class CartController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<Cart> getCartForUser(@PathVariable Long userId) {
         System.out.println("this is from getting cart by user ");
+        System.out.println(userId);
         Optional<Cart> optionalCart = cartService.getCartForUser(userId);
 
         if (optionalCart.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
+    
         Cart cart = optionalCart.get();
         return ResponseEntity.ok(cart);
     }
