@@ -20,6 +20,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> getUser(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
     public void addNewUser(User user) {
         Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
         if (userByEmail.isPresent()) {
@@ -46,4 +50,15 @@ public class UserService {
         user.setLastname(updatedUser.getLastname());
         return userRepository.save(user);
     }
+
+    /*public Optional<User> getAuthenticatedUser(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            String username = jwtTokenProvider.getUsername(token);
+            return userRepository.findUserByUsername(username); // Assuming you have a method like this in your repository
+        }
+        return null;
+    }*/
+
+
 }
