@@ -1,16 +1,20 @@
 package com.example.ecommerce.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.security.core.Authentication;
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path="user")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     private final UserService userService;
 
@@ -43,4 +47,9 @@ public class UserController {
         this.userService.updateUserById(userId,updatedUser);
     }
 
+    @GetMapping("/currentUser")
+    public Optional<User> getCurrentUser(Authentication authentication) {
+        String username = authentication.getName();
+        return this.userService.getUser(username);
+    }
 }

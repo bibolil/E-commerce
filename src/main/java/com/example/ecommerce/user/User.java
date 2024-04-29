@@ -36,6 +36,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+    private String country;
+    private String city;
+    private String postCode;
+    private String address;
+    private String phone;
 
 
 
