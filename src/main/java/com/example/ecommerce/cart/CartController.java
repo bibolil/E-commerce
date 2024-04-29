@@ -43,6 +43,16 @@ public class CartController {
         }
     }
 
+    @DeleteMapping("removeItem/{userId}/{itemCode}")
+    public ResponseEntity<String> removeItemFromCart(@PathVariable Long userId, @PathVariable String itemCode) {
+        try {
+            cartService.removeItemFromCart(userId, itemCode);
+            return ResponseEntity.ok("Item removed from cart successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to remove item from cart: " + e.getMessage());
+        }
+    }
+
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<Cart> getCartForUser(@PathVariable Long userId) {

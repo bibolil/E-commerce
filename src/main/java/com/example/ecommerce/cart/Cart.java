@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -42,7 +43,19 @@ public class Cart {
     // Method to add an item to the cart
     public void addItem(Item item) {
         items.add(item);
-        item.setCart(this); // Set the cart of the item to this cart
+       // item.setCart(this); // Set the cart of the item to this cart
+    }
+
+    public boolean removeItem(String itemCode) {
+        for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+            Item item = iterator.next();
+            if (item.getCode().equals(itemCode)) {
+                item.setCart(null);
+                iterator.remove();
+                return true;
+            }
+        }
+        return false; // Item not found in the cart
     }
 
 }
