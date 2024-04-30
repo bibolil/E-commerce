@@ -8,4 +8,6 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item,Long> {
     Optional<Item> findByCode(String code);
+
+    void deleteByCode(String code);
 }
