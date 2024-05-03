@@ -29,6 +29,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/item/**", "/cart/**","/user/**").permitAll()
+                        .requestMatchers("/order/**").permitAll()
+                        .requestMatchers("/orderItem/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

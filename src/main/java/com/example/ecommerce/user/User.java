@@ -1,6 +1,5 @@
 package com.example.ecommerce.user;
 
-import com.example.ecommerce.cart.Cart;
 import com.example.ecommerce.token.Token;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -48,9 +47,6 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Token> tokens;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
