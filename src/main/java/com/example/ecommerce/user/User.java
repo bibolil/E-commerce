@@ -28,25 +28,23 @@ public class User implements UserDetails {
     @GeneratedValue
     @JsonView(Views.UserSummary.class)
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String name;
     @Column(unique = true)
     private String username;
     @Column(unique = true)
     private String email;
     private String password;
     private String country;
-    private String city;
-    private String postCode;
     private String address;
     private String phone;
+    private String date;
 
 
 
     @Enumerated(EnumType.STRING)
     private Role role=Role.USER;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Token> tokens;
 
     @Override

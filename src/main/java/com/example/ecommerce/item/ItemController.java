@@ -31,23 +31,23 @@ public class ItemController {
         return this.itemService.getItem(code);
     }
 
-    @PreAuthorize("hasAnyAuthority('admin:create','user:create')")
+   // @PreAuthorize("hasAnyAuthority('admin:create','user:create')")
     @PostMapping(path="addItem")
     public void addItem(@RequestBody Item item)
     {
         this.itemService.addNewItem(item);
     }
 
-    @PreAuthorize("hasAnyAuthority('admin:delete','user:delete')")
+   // @PreAuthorize("hasAnyAuthority('admin:delete','user:delete')")
     @DeleteMapping(path="deleteItem/{itemCode}")
-    public void deleteItem(@PathVariable("itemCode") long code)
+    public void deleteItem(@PathVariable("itemCode") String code)
     {
         this.itemService.deleteItem(code);
     }
 
-    @PreAuthorize("hasAnyAuthority('admin:update','user:update')")
+    //@PreAuthorize("hasAnyAuthority('admin:update','user:update')")
     @PutMapping(path="updateItem/{itemId}")
-    public void updateItem(@PathVariable("itemId") long code,
+    public void updateItem(@PathVariable("itemId") String code,
     @RequestBody Item updatedItem)
     {
         this.itemService.updateItem(code,updatedItem);

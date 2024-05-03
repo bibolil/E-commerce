@@ -28,7 +28,7 @@ public class ItemService {
 
     public void addNewItem(Item item)
     {
-        if(itemRepository.existsById(Long.valueOf(item.getCode())))
+        if(itemRepository.findByCode(item.getCode()).isPresent())
         {
            throw new IllegalStateException("item code already in use");
         }
@@ -36,20 +36,26 @@ public class ItemService {
 
     }
 
-    public void deleteItem(long code) {
-        if (!itemRepository.existsById(code)) {
+    public void deleteItem(String code) {
+        if (itemRepository.findByCode(code).isEmpty()) {
+
             throw new IllegalStateException("item does not exists");
         }
-        itemRepository.deleteById(code);
+        System.out.println("HAW L CODE " + itemRepository.findByCode(code));
+        Item item = itemRepository.findByCode(code).orElseThrow(EntityNotFoundException::new);
+        itemRepository.delete(item);
     }
 
-    public void updateItem(long code,Item updatedItem){
-        Item item=itemRepository.findById(code)
+    public void updateItem(String code,Item updatedItem){
+        Item item=itemRepository.findByCode(code)
                 .orElseThrow(()->new EntityNotFoundException("Item not found with code: "+code));
+        System.out.println(updatedItem.getName());
+        item.setName(updatedItem.getName());
         item.setPrice(updatedItem.getPrice());
         item.setDescription(updatedItem.getDescription());
         item.setImage(updatedItem.getImage());
         item.setInventoryStatus(item.getInventoryStatus());
+        itemRepository.save(item);
     }
 
 

@@ -18,21 +18,21 @@ public class Item {
     @Id
     @Getter
     private String code;
-    @Setter
+
     private String name;
-    @Setter
+
     private String description;
-    @Setter
+
     private String image;
-    @Setter
+
     private Double price;
-    @Setter
+
     private String category;
-    @Setter
+
     private long quantity;
-    @Setter
+
     private String inventoryStatus;
-    @Setter
+
     private int rating;
 
     @OneToMany(mappedBy = "item")
