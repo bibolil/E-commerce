@@ -1,11 +1,12 @@
 package com.example.ecommerce.item;
-
-import com.example.ecommerce.cart.Cart;
+import com.example.ecommerce.orderItem.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 
 @Getter
@@ -15,6 +16,7 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
 public class Item {
     @Id
+    @Getter
     private String code;
     @Setter
     private String name;
@@ -33,13 +35,9 @@ public class Item {
     @Setter
     private int rating;
 
-    @ManyToOne
-    private Cart cart;
-
-
-
-
-   public Item() {
+    @OneToMany(mappedBy = "item")
+    private Set<OrderItem> orderItems;
+    public Item() {
     }
 
     public Item(String code, String name, String description, String image, Double price, String category,long quantity,String inventoryStatus,  int rating) {
@@ -67,8 +65,5 @@ public class Item {
                 ", rating=" + rating +
                 '}';
     }
-
-
-
 }
 
