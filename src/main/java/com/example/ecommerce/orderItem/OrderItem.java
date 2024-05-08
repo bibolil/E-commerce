@@ -4,8 +4,11 @@ import com.example.ecommerce.Order.Order;
 import com.example.ecommerce.item.Item;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "order_item")
 public class OrderItem {

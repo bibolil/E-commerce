@@ -31,7 +31,7 @@ public class Order {
     private OrderStatus status = OrderStatus.pending;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMethods paymentMethod;
+    private PaymentMethods paymentMethod=PaymentMethods.OnDelivary;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
